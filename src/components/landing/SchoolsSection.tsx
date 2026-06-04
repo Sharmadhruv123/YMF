@@ -9,7 +9,7 @@ export default function SchoolsSection() {
         <div ref={ref} className={`text-center mb-16 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
           <p className="text-primary font-bold text-sm tracking-widest uppercase mb-3">Our Partners</p>
           <h2 className="font-display text-3xl md:text-5xl font-bold text-foreground">
-            Schools We <span className="text-primary">Work With</span>
+            Institutional <span className="text-primary">Partner</span>
           </h2>
         </div>
         
