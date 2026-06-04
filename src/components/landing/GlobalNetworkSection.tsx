@@ -3,7 +3,7 @@ import { MapPin, Phone } from "lucide-react";
 
 const locations = [
   { city: "Ahmedabad", label: "Head Office", address: "8, Deepawali Complex, Navrangpura", phone: "+91 8511363376" },
-  { city: "Mumbai", label: "Support Office", address: "SRK Foundation, 507 Prasad Chambers, Tata Road No. 2, Opera House, Mumbai 400004", phone: "+91 7227887909" },
+  { city: "Mumbai", label: "Support Office", address: "SRK Foundation, 507 Prasad Chambers, Tata Road No. 2, Opera House, Mumbai 400004", phone: "+91 9426861925" },
   { city: "Delhi", label: "Support Office", address: "Ahimsa Vishwa Bharti, 63/1, Old Rajinder Nagar, Karol Baug Metro Station, New Delhi - 110060", phone: "+91 7227887909" },
   { city: "New York", label: "Support Office", address: "218 Webster Avenue, Brooklyn, New York - 11230", phone: "+1 917 400 6520" },
   { city: "Melbourne", label: "Support Office", address: "603/1A Launder Street, Hawthorn, Melbourne, Victoria 3122", phone: "+61 413 186 117" },

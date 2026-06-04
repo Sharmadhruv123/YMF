@@ -11,6 +11,7 @@ import RecognitionSection from "@/components/landing/RecognitionSection";
 import JoinCitySection from "@/components/landing/JoinCitySection";
 import GlobalNetworkSection from "@/components/landing/GlobalNetworkSection";
 import FinalCTA from "@/components/landing/FinalCTA";
+import SchoolsSection from "@/components/landing/SchoolsSection";
 import Footer from "@/components/landing/Footer";
 
 const Index = () => (
@@ -33,6 +34,7 @@ const Index = () => (
       <TestimonialsSection />
     </div>
     <RecognitionSection />
+    <SchoolsSection />
     <div className="section-light bg-background">
       <JoinCitySection />
     </div>

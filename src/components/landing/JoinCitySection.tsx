@@ -45,7 +45,11 @@ export default function JoinCitySection() {
 
       if (error) throw error;
 
-      toast({ title: "Message sent!", description: "We'll be in touch soon." });
+      const whatsappText = `Hello!\n\nHere are the details from the Join Your City form:\n\n*Name:* ${form.name.trim()}\n*Email:* ${form.email.trim()}\n*Phone:* ${form.phone.trim()}\n*City:* ${form.city.trim()}\n*Message:* ${form.message.trim() || 'N/A'}`;
+      const whatsappUrl = `https://wa.me/918511363376?text=${encodeURIComponent(whatsappText)}`;
+      window.open(whatsappUrl, '_blank');
+
+      toast({ title: "Redirecting to WhatsApp", description: "Opening your WhatsApp to send the message." });
       setForm({ name: "", email: "", phone: "", city: "", message: "" });
     } catch {
       toast({ title: "Something went wrong", description: "Please try again later.", variant: "destructive" });

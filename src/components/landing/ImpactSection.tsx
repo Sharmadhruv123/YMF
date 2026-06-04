@@ -2,9 +2,9 @@ import { useScrollAnimation, useCountUp } from "@/hooks/useScrollAnimation";
 import { School, GraduationCap, Heart, Users, TreePine, Glasses, UserCheck } from "lucide-react";
 
 const mainStats = [
-  { icon: School, value: 500, suffix: "+", label: "Schools", color: "from-amber-500 to-yellow-500" },
-  { icon: GraduationCap, value: 200, suffix: "+", label: "Colleges", color: "from-amber-600 to-amber-400" },
-  { icon: Heart, value: 85, suffix: "+", label: "NGOs", color: "from-yellow-500 to-amber-500" },
+  { icon: School, value: 5000, suffix: "+", label: "Schools", color: "from-amber-500 to-yellow-500" },
+  { icon: GraduationCap, value: 2000, suffix: "+", label: "Colleges", color: "from-amber-600 to-amber-400" },
+  { icon: Heart, value: 850, suffix: "+", label: "NGOs", color: "from-yellow-500 to-amber-500" },
   { icon: Users, value: 1.5, suffix: "M", label: "Youth Inspired", decimal: true, color: "from-amber-500 to-yellow-600" },
 ];
 

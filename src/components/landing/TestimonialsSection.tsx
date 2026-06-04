@@ -22,15 +22,11 @@ const testimonials = [
 
 export default function TestimonialsSection() {
   const { ref, isVisible } = useScrollAnimation();
-  const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlayingNormal, setIsPlayingNormal] = useState(false);
 
   const handleVideoClick = () => {
-    if (!isPlayingNormal && videoRef.current) {
+    if (!isPlayingNormal) {
       setIsPlayingNormal(true);
-      videoRef.current.muted = false;
-      videoRef.current.currentTime = 0;
-      videoRef.current.play();
     }
   };
 
@@ -47,26 +43,25 @@ export default function TestimonialsSection() {
 
         {/* Video */}
         <div className="max-w-4xl mx-auto mb-16">
-          <div className="aspect-video rounded-2xl overflow-hidden shadow-lg shadow-primary/10 bg-black relative group cursor-pointer" onClick={handleVideoClick}>
+          <div className="aspect-video rounded-2xl overflow-hidden shadow-lg shadow-primary/10 bg-black relative group">
             {!isPlayingNormal && (
-              <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
+              <div 
+                className="absolute inset-0 flex items-center justify-center z-20 cursor-pointer"
+                onClick={handleVideoClick}
+              >
                 <div className="w-16 h-16 rounded-full bg-primary/90 flex items-center justify-center group-hover:scale-110 transition-transform shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] border-2 border-foreground">
                   <div className="w-0 h-0 border-t-[10px] border-t-transparent border-l-[16px] border-l-foreground border-b-[10px] border-b-transparent ml-2" />
                 </div>
               </div>
             )}
-            <video
-              ref={videoRef}
-              className={`w-full h-full object-cover transition-all duration-700 ${!isPlayingNormal ? 'grayscale opacity-80' : 'grayscale-0 opacity-100'}`}
-              controls={isPlayingNormal}
-              autoPlay
-              loop={!isPlayingNormal}
-              muted={!isPlayingNormal}
-              playsInline
-            >
-              <source src="/videos/motivation-sajan-shah.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+            <iframe
+              className={`w-full h-full transition-all duration-700 ${!isPlayingNormal ? 'grayscale opacity-80 pointer-events-none' : 'grayscale-0 opacity-100 pointer-events-auto'}`}
+              src={`https://www.youtube.com/embed/oBkfYQYPNu0?autoplay=1&${!isPlayingNormal ? 'mute=1&controls=0&loop=1&playlist=oBkfYQYPNu0' : 'mute=0&controls=1'}`}
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            ></iframe>
           </div>
         </div>
 
