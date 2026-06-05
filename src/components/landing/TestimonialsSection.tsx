@@ -20,6 +20,24 @@ const testimonials = [
   },
 ];
 
+function TestimonialCard({ quote, name, role, index }: { quote: string, name: string, role: string, index: number }) {
+  const { ref: cardRef, isVisible: cardVisible } = useScrollAnimation(0.1);
+  return (
+    <div
+      ref={cardRef}
+      className={`illustration-card bg-white p-8 md:p-10 hover:border-primary transition-all duration-500 text-left ${cardVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+      style={{ transitionDelay: `${index * 150}ms` }}
+    >
+      <span className="text-6xl font-serif text-primary leading-none block h-10 mb-2">“</span>
+      <p className="text-foreground leading-relaxed mb-8 italic">{quote}</p>
+      <div>
+        <p className="font-display font-bold text-foreground">{name}</p>
+        <p className="text-muted-foreground text-sm">{role}</p>
+      </div>
+    </div>
+  );
+}
+
 export default function TestimonialsSection() {
   const { ref, isVisible } = useScrollAnimation();
   const [isPlayingNormal, setIsPlayingNormal] = useState(false);
@@ -66,24 +84,9 @@ export default function TestimonialsSection() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
-          {testimonials.map(({ quote, name, role }, i) => {
-            const { ref: cardRef, isVisible: cardVisible } = useScrollAnimation(0.1);
-            return (
-              <div
-                key={name}
-                ref={cardRef}
-                className={`illustration-card bg-white p-8 md:p-10 hover:border-primary transition-all duration-500 text-left ${cardVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-                style={{ transitionDelay: `${i * 150}ms` }}
-              >
-                <span className="text-6xl font-serif text-primary leading-none block h-10 mb-2">“</span>
-                <p className="text-foreground leading-relaxed mb-8 italic">{quote}</p>
-                <div>
-                  <p className="font-display font-bold text-foreground">{name}</p>
-                  <p className="text-muted-foreground text-sm">{role}</p>
-                </div>
-              </div>
-            );
-          })}
+          {testimonials.map((test, i) => (
+            <TestimonialCard key={test.name} {...test} index={i} />
+          ))}
         </div>
       </div>
     </section>

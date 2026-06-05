@@ -11,6 +11,23 @@ const figures = [
   { name: "Ram Nath Kovind", title: "Former President of India", image: ramNathKovindImg },
 ];
 
+function FigureCard({ name, title, image, index }: { name: string, title: string, image: string, index: number }) {
+  const { ref: cardRef, isVisible: cardVisible } = useScrollAnimation(0.1);
+  return (
+    <div
+      ref={cardRef}
+      className={`glass-card p-6 text-center group hover:border-primary/30 transition-all duration-500 hover:-translate-y-2 ${cardVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+      style={{ transitionDelay: `${index * 100}ms` }}
+    >
+      <div className="w-24 h-24 mx-auto rounded-full overflow-hidden mb-4 group-hover:scale-105 transition-transform shadow-lg shadow-primary/10">
+        <img src={image} alt={name} className="w-full h-full object-cover" />
+      </div>
+      <h3 className="font-display font-bold text-foreground mb-1">{name}</h3>
+      <p className="text-muted-foreground text-xs">{title}</p>
+    </div>
+  );
+}
+
 export default function RecognitionSection() {
   const { ref, isVisible } = useScrollAnimation();
 
@@ -28,23 +45,9 @@ export default function RecognitionSection() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-          {figures.map(({ name, title, image }, i) => {
-            const { ref: cardRef, isVisible: cardVisible } = useScrollAnimation(0.1);
-            return (
-              <div
-                key={name}
-                ref={cardRef}
-                className={`glass-card p-6 text-center group hover:border-primary/30 transition-all duration-500 hover:-translate-y-2 ${cardVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-                style={{ transitionDelay: `${i * 100}ms` }}
-              >
-                <div className="w-24 h-24 mx-auto rounded-full overflow-hidden mb-4 group-hover:scale-105 transition-transform shadow-lg shadow-primary/10">
-                  <img src={image} alt={name} className="w-full h-full object-cover" />
-                </div>
-                <h3 className="font-display font-bold text-foreground mb-1">{name}</h3>
-                <p className="text-muted-foreground text-xs">{title}</p>
-              </div>
-            );
-          })}
+          {figures.map((fig, i) => (
+            <FigureCard key={fig.name} {...fig} index={i} />
+          ))}
         </div>
       </div>
     </section>

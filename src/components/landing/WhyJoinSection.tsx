@@ -9,6 +9,25 @@ const benefits = [
   { icon: Trophy, title: "Global Recognition", description: "Being part of a movement acknowledged by world leaders and global organizations." },
 ];
 
+import { LucideIcon } from "lucide-react";
+
+function BenefitCard({ icon: Icon, title, description, index }: { icon: LucideIcon, title: string, description: string, index: number }) {
+  const { ref: cardRef, isVisible: cardVisible } = useScrollAnimation(0.1);
+  return (
+    <div
+      ref={cardRef}
+      className={`glass-card p-6 text-center group hover:border-primary/30 transition-all duration-500 hover:-translate-y-2 ${cardVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+      style={{ transitionDelay: `${index * 100}ms` }}
+    >
+      <div className="w-14 h-14 mx-auto rounded-xl golden-gradient flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+        <Icon size={24} className="text-primary-foreground" />
+      </div>
+      <h3 className="font-display text-lg font-bold text-foreground mb-2">{title}</h3>
+      <p className="text-muted-foreground text-sm leading-relaxed">{description}</p>
+    </div>
+  );
+}
+
 export default function WhyJoinSection() {
   const { ref, isVisible } = useScrollAnimation();
 
@@ -24,23 +43,9 @@ export default function WhyJoinSection() {
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {benefits.map(({ icon: Icon, title, description }, i) => {
-            const { ref: cardRef, isVisible: cardVisible } = useScrollAnimation(0.1);
-            return (
-              <div
-                key={title}
-                ref={cardRef}
-                className={`glass-card p-6 text-center group hover:border-primary/30 transition-all duration-500 hover:-translate-y-2 ${cardVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-                style={{ transitionDelay: `${i * 100}ms` }}
-              >
-                <div className="w-14 h-14 mx-auto rounded-xl golden-gradient flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
-                  <Icon size={24} className="text-primary-foreground" />
-                </div>
-                <h3 className="font-display text-lg font-bold text-foreground mb-2">{title}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">{description}</p>
-              </div>
-            );
-          })}
+          {benefits.map((benefit, i) => (
+            <BenefitCard key={benefit.title} {...benefit} index={i} />
+          ))}
         </div>
 
         <div className="text-center mt-12">

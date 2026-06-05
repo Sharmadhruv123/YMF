@@ -12,6 +12,31 @@ const initiatives = [
   { image: visionImg, title: "Youth Vision Workshops", description: "Interactive sessions helping students realize their potential as changemakers.", tag: "Purpose-Driven Learning" },
 ];
 
+function InitiativeCard({ image, title, description, tag, index }: { image: string, title: string, description: string, tag: string, index: number }) {
+  const { ref: cardRef, isVisible: cardVisible } = useScrollAnimation(0.1);
+  return (
+    <div
+      ref={cardRef}
+      className={`bg-card rounded-xl overflow-hidden border border-border/50 group hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-2 transition-all duration-500 ${cardVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+      style={{ transitionDelay: `${index * 100}ms` }}
+    >
+      <div className="aspect-[4/3] overflow-hidden">
+        <img
+          src={image}
+          alt={title}
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          loading="lazy"
+        />
+      </div>
+      <div className="p-5">
+        <h3 className="font-display text-lg font-bold text-foreground mb-2 leading-snug">{title}</h3>
+        <p className="text-muted-foreground text-sm leading-relaxed mb-3">{description}</p>
+        <span className="text-primary text-xs font-semibold">{tag}</span>
+      </div>
+    </div>
+  );
+}
+
 export default function InitiativesSection() {
   const { ref, isVisible } = useScrollAnimation();
 
@@ -27,31 +52,9 @@ export default function InitiativesSection() {
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {initiatives.map(({ image, title, description, tag }, i) => {
-            const { ref: cardRef, isVisible: cardVisible } = useScrollAnimation(0.1);
-            return (
-              <div
-                key={title}
-                ref={cardRef}
-                className={`bg-card rounded-xl overflow-hidden border border-border/50 group hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-2 transition-all duration-500 ${cardVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-                style={{ transitionDelay: `${i * 100}ms` }}
-              >
-                <div className="aspect-[4/3] overflow-hidden">
-                  <img
-                    src={image}
-                    alt={title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                  />
-                </div>
-                <div className="p-5">
-                  <h3 className="font-display text-lg font-bold text-foreground mb-2 leading-snug">{title}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed mb-3">{description}</p>
-                  <span className="text-primary text-xs font-semibold">{tag}</span>
-                </div>
-              </div>
-            );
-          })}
+          {initiatives.map((init, i) => (
+            <InitiativeCard key={init.title} {...init} index={i} />
+          ))}
         </div>
 
         <div className="text-center mt-12">

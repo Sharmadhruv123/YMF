@@ -10,6 +10,37 @@ const locations = [
   { city: "Philippines", label: "Support Office", address: "58D The Rise, San Antonio, Makati, Philippines 1304", phone: "+639959137535" },
 ];
 
+function LocationCard({ city, label, address, phone, index }: { city: string, label: string, address: string, phone: string, index: number }) {
+  const { ref: cardRef, isVisible: cardVisible } = useScrollAnimation(0.1);
+  return (
+    <div
+      ref={cardRef}
+      className={`illustration-card p-6 transition-all duration-500 border-2 border-foreground shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] ${cardVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"} ${label === "Head Office" ? "!bg-primary" : "bg-white"}`}
+      style={{ transitionDelay: `${index * 80}ms` }}
+    >
+      <div className="flex items-center gap-3 mb-4">
+        <div className={`w-10 h-10 shrink-0 rounded-full border-2 border-foreground flex items-center justify-center ${label === "Head Office" ? "!bg-white" : "bg-primary/10"}`}>
+          <MapPin size={20} className={label === "Head Office" ? "text-foreground" : "text-primary"} />
+        </div>
+        <div>
+          <h3 className="font-display font-bold text-foreground">{city}</h3>
+          <p className={`text-sm ${label === "Head Office" ? "text-foreground/80 font-bold" : "text-muted-foreground"}`}>{label}</p>
+        </div>
+      </div>
+      <div className={`space-y-2 text-sm ${label === "Head Office" ? "text-foreground" : "text-muted-foreground"}`}>
+        <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address + ', ' + city)}`} target="_blank" rel="noopener noreferrer" className="flex items-start gap-2 hover:opacity-70 transition-opacity cursor-pointer">
+          <MapPin size={14} className="shrink-0 mt-0.5 opacity-70" />
+          <span className="font-medium">{address}</span>
+        </a>
+        <div className="flex items-center gap-2">
+          <Phone size={14} className="shrink-0 opacity-70" />
+          <span className="font-medium">{phone}</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function GlobalNetworkSection() {
   const { ref, isVisible } = useScrollAnimation();
 
@@ -24,37 +55,9 @@ export default function GlobalNetworkSection() {
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {locations.map(({ city, label, address, phone }, i) => {
-            const { ref: cardRef, isVisible: cardVisible } = useScrollAnimation(0.1);
-            return (
-              <div
-                key={city}
-                ref={cardRef}
-                className={`illustration-card p-6 transition-all duration-500 border-2 border-foreground shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] ${cardVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"} ${label === "Head Office" ? "!bg-primary" : "bg-white"}`}
-                style={{ transitionDelay: `${i * 80}ms` }}
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className={`w-10 h-10 shrink-0 rounded-full border-2 border-foreground flex items-center justify-center ${label === "Head Office" ? "!bg-white" : "bg-primary/10"}`}>
-                    <MapPin size={20} className={label === "Head Office" ? "text-foreground" : "text-primary"} />
-                  </div>
-                  <div>
-                    <h3 className="font-display font-bold text-foreground">{city}</h3>
-                    <p className={`text-sm ${label === "Head Office" ? "text-foreground/80 font-bold" : "text-muted-foreground"}`}>{label}</p>
-                  </div>
-                </div>
-                <div className={`space-y-2 text-sm ${label === "Head Office" ? "text-foreground" : "text-muted-foreground"}`}>
-                  <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address + ', ' + city)}`} target="_blank" rel="noopener noreferrer" className="flex items-start gap-2 hover:opacity-70 transition-opacity cursor-pointer">
-                    <MapPin size={14} className="shrink-0 mt-0.5 opacity-70" />
-                    <span className="font-medium">{address}</span>
-                  </a>
-                  <div className="flex items-center gap-2">
-                    <Phone size={14} className="shrink-0 opacity-70" />
-                    <span className="font-medium">{phone}</span>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+          {locations.map((loc, i) => (
+            <LocationCard key={loc.city} {...loc} index={i} />
+          ))}
         </div>
       </div>
     </section>

@@ -14,7 +14,18 @@ const secondaryStats = [
   { icon: Glasses, value: 500, suffix: "K", label: "UV Glasses Provided" },
 ];
 
-function StatCard({ icon: Icon, value, suffix, label, decimal, large }: any) {
+import { LucideIcon } from "lucide-react";
+
+interface StatCardProps {
+  icon: LucideIcon;
+  value: number;
+  suffix?: string;
+  label: string;
+  decimal?: boolean;
+  large?: boolean;
+}
+
+function StatCard({ icon: Icon, value, suffix, label, decimal, large }: StatCardProps) {
   const { ref, isVisible } = useScrollAnimation();
   const count = useCountUp(decimal ? value * 10 : value, 2000, isVisible);
   const display = decimal ? (count / 10).toFixed(1) : count;

@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { CheckCircle, Users, Handshake, Heart, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
+
 
 const ways = [
   { icon: Users, title: "Attend the Forum", desc: "Join thousands of youth at our next event" },
@@ -35,15 +35,21 @@ export default function JoinCitySection() {
 
     setSubmitting(true);
     try {
-      const { error } = await supabase.from("contact_submissions").insert({
-        name: form.name.trim(),
-        email: form.email.trim(),
-        phone: form.phone.trim(),
-        city: form.city.trim(),
-        message: form.message.trim() || null,
+      const response = await fetch("http://localhost:3000/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.name.trim(),
+          email: form.email.trim(),
+          phone: form.phone.trim(),
+          city: form.city.trim(),
+          message: form.message.trim() || null,
+        }),
       });
 
-      if (error) throw error;
+      if (!response.ok) {
+        throw new Error("Failed to submit form");
+      }
 
       const whatsappText = `Hello!\n\nHere are the details from the Join Your City form:\n\n*Name:* ${form.name.trim()}\n*Email:* ${form.email.trim()}\n*Phone:* ${form.phone.trim()}\n*City:* ${form.city.trim()}\n*Message:* ${form.message.trim() || 'N/A'}`;
       const whatsappUrl = `https://wa.me/918511363376?text=${encodeURIComponent(whatsappText)}`;
